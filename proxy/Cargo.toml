@@ -1,0 +1,26 @@
+[package]
+name = "ppproxy"
+version = "0.1.0"
+authors = ["范辉 <fanhui.x@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "2.33"
+lazy_static = "1.4"
+parking_lot = "0.11"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+async-std = "1.6.3"
+
+ppserver_def = { path = "../server_def" }
+myutil = { git = "https://gitee.com/kt10/myutil.git", branch = "master" }
+
+[dev-dependencies]
+nix = "0.18"
+ppserver = { path = "../server" }
+
+[features]
+default = []
+testmock = [ "ppserver/testmock" ]

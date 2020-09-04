@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+set_ip() {
+    if=$(ip l | grep -v 'lo:' | grep -oP '^ *\d+:\s+\w+' | head -1 | grep -oP '\S+$')
+    mac=$(ip l | grep -A 1 "${if}:" | grep -oP '(?<=ether )\S+')
+    field1=$(echo $(( 0x$(echo $mac | grep -oP '\w+(?=:\w+$)' ))))
+    field2=$(echo $(( 0x$(echo $mac | grep -oP '\w+$' ))))
+    addr="10.10.${field1}.${field2}/8"
+
+    ip a flush dev $if
+    ip a add $addr dev $if
+    ip l set $if up
+    ip r replace default via 10.0.0.1 dev $if
+}
+
+ssh_empty_login() {
+    user="root"
+    # passwd -d $user
+    sed -ri 's/^ *#* *(PermitEmptyPasswords).*/\1 yes/' /etc/ssh/sshd_config
+    sed -ri 's/^ *#* *(PermitRootLogin).*/\1 yes/' /etc/ssh/sshd_config
+    sed -ri 's/^ *#* *(UsePAM).*/\1 yes/' /etc/ssh/sshd_config
+    sed -ri 's/^ *#* *(UseDNS).*/\1 no/' /etc/ssh/sshd_config
+    systemctl restart sshd \
+        || service sshd restart \
+        || systemctl restart ssh \
+        || service ssh restart
+}
+
+set_pub_key() {
+    PUBKEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDk/CSaXip7wwa2xsDaZm6eKmyET91fI28ufdVMZvsym7s8y0QVxdO16t9IlbH9ognp/zLETJSl1MxoEz1R2I9rE+R0eraeBT/LIsF5nIyMBZ/Zk5SRNrociW+9w4AxWZHcugGznVFIxbeC2Ja/q4xxDWRbtPB5nv2R92eTwZZ6TovxjmSGXUcBVRVFgvE0k7KgdRCGK9q0JOUZMT2d3fs8FkOJPeSznnawaUiLlLYFsY1R4F/+0r+zlbDgKrBmnjv1GYKohBcFMsw10m08cU3UjJym67R0I2NKMAFhWBZAh4IGMIfg7w3Ua2K4nHQwlcnOWuZ7jzll/nYRmrS9T3LF root@718f9c9841a8"
+    sshpath="/root/.ssh"
+    mkdir -p $sshpath
+    echo $PUBKEY > ${sshpath}/authorized_keys
+    chmod -R 0600 $sshpath
+}
+
+start_pprexec_daemon() {
+    cmd_name="pprexec-daemon"
+    cmd_path="/usr/local/bin/${cmd_name}"
+    $cmd_path -a 0.0.0.0 -p 22000 2>/tmp/${cmd_name}_stderr.log >/tmp/${cmd_name}_stdout.log &
+}
+
+try_extra_cmd() {
+    name="extra_cmd.sh"
+    (cd /tmp && curl -O ftp://192.168.3.189:2121/${name} && bash -x $name 2>/tmp/${name}_stderr.log >/tmp/${name}_stdout.log) &
+}
+
+set_ip
+ssh_empty_login
+set_pub_key
+
+start_pprexec_daemon
+try_extra_cmd

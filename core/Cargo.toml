@@ -1,0 +1,20 @@
+[package]
+name = "ppcore"
+version = "0.1.0"
+authors = ["范辉 <fanhui.x@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+nix = "0.18"
+libc = "0.2"
+lazy_static = "1.4"
+parking_lot = "0.11"
+ppcore_def = { path = "../core_def" }
+
+myutil = { git = "https://gitee.com/kt10/myutil.git", branch = "master" }
+
+[features]
+default = [ "backing_file" ]
+testmock = []
+zfs_snapshot = []
+backing_file = []

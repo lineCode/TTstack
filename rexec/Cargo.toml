@@ -1,0 +1,31 @@
+[package]
+edition = "2018"
+name = "pprexec"
+version = "0.1.0"
+authors = ["fanhui <hui.fan@mail.ru>"]
+description = "Execute remote commands at a fairly fast speed."
+
+[dependencies]
+nix = "0.18"
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+myutil = { git = "https://gitee.com/kt10/myutil.git", branch = "master" }
+
+lazy_static = { optional = true, version = "1.4" }
+futures = { optional = true, version = "0.3", features = [ "thread-pool" ] }
+num_cpus = { optional = true, version = "1.13" }
+
+clap = "2.33"
+
+[features]
+default = [ "server", "client" ]
+server = [ "lazy_static", "futures", "num_cpus" ]
+client = []
+
+[[bin]]
+name = "pprexec-daemon"
+path = "src/bin/daemon.rs"
+
+[[bin]]
+name = "pprexec-cli"
+path = "src/bin/cli.rs"
