@@ -18,7 +18,7 @@ use std::{
 use ttcore::{vm_kind, Env, VmCfg};
 
 type Ops = fn(SocketAddr, Vec<u8>) -> Result<()>;
-include!("../../../server_def/src/included_ops_map.rs");
+include!("included_ops_map.rs");
 
 /// 基于 peeraddr 生成 CliId
 #[inline(always)]

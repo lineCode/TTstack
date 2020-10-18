@@ -16,7 +16,7 @@ nix = "0.18"
 libc = "0.2"
 lazy_static = "1.4"
 parking_lot = "0.11"
-ttcore_def = { path = "../core_def" }
+ttcore_def = { path = "../core_def", version = "0.2" }
 
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"

@@ -1,5 +1,5 @@
 [package]
-name = "tt"
+name = "ttclient"
 version = "0.2.10"
 
 edition = "2018"
@@ -23,5 +23,5 @@ flate2 = "1.0"
 myutil = "0.2"
 threadpool = "1.8"
 
-ttserver_def = { path = "../server_def" }
-ttrexec = { path = "../rexec", default-features = false, features = [ "client" ] }
+ttserver_def = { path = "../server_def", version = "0.2" }
+ttrexec = { path = "../rexec", version = "0.2", default-features = false, features = [ "client" ] }

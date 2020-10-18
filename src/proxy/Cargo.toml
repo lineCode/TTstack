@@ -23,11 +23,11 @@ flate2 = "1.0"
 async-std = "1.6.3"
 myutil = "0.2"
 
-ttserver_def = { path = "../server_def" }
+ttserver_def = { path = "../server_def", version = "0.2" }
 
 [dev-dependencies]
 nix = "0.18"
-ttserver = { path = "../server" }
+ttserver = { path = "../server", version = "0.2" }
 
 [features]
 default = []

@@ -35,7 +35,7 @@ lazy_static! {
 }
 
 type Ops = fn(usize, SocketAddr, Vec<u8>) -> Result<()>;
-include!("../../../server_def/src/included_ops_map.rs");
+include!("included_ops_map.rs");
 
 /// 将客户端的请求,
 /// 分发至后台的各个 Slave Server.
