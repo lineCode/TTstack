@@ -8,6 +8,8 @@ description = "Lightweight private cloud solution for SME scenarios."
 license = "MIT OR Apache-2.0"
 keywords = ["openstack", "k8s", "kvm", "cloud"]
 categories = ["command-line-utilities"]
+homepage = "https://github.com/ktmlm/TTstack"
+repository = "https://github.com/ktmlm/TTstack.git"
 
 [dependencies]
 nix = "0.18"
@@ -15,8 +17,7 @@ clap = "2.33"
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 jemallocator = { optional = true, version = "0.3.2" }
-
-myutil = { git = "https://gitee.com/kt10/myutil", branch = "master" }
+myutil = "0.2"
 
 [features]
 default = [ "server", "client" ]

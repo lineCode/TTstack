@@ -8,6 +8,8 @@ description = "Lightweight private cloud solution for SME scenarios."
 license = "MIT OR Apache-2.0"
 keywords = ["openstack", "k8s", "kvm", "cloud"]
 categories = ["command-line-utilities"]
+homepage = "https://github.com/ktmlm/TTstack"
+repository = "https://github.com/ktmlm/TTstack.git"
 
 [dependencies]
 nix = "0.18"
@@ -21,13 +23,12 @@ flate2 = "1.0"
 futures = { version = "0.3.5", features = ["thread-pool"] }
 futures-timer = "3.0.2"
 
+myutil = "0.2"
 num_cpus = "1.13"
 parking_lot = "0.11"
 
 ttcore = { path = "../core", default-features = false }
 ttserver_def = { path = "../server_def" }
-
-myutil = { git = "https://gitee.com/kt10/myutil", branch = "master" }
 
 [features]
 default = [ "nft", "zfs" ]
